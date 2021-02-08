@@ -8,3 +8,8 @@ class Messages:
     ALREADY_LOGGED_IN = "You are already logged in"
     NOT_LOGGED_IN = "You are not logged in"
     LOGGED_OUT = "You have been logout"
+    NEW_PASSWORD_REQUIRED = "New password parameter is required"
+    PWD_CONFIRMATION_FAILED = "Confirmation password is not the same as new password"
+    CURRENT_PWD_REQUIRED = "Current password parameter is required"
+    WRONG_CURRENT_PWD = "Current password is incorrect"
+    PASSWORD_CHANGED = "Password has been changed"
