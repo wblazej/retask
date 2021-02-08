@@ -1,0 +1,10 @@
+class Messages:
+    DEFAULT_ROOT_LOGIN = "App initialized, root account login data: Login: root | Password: root"
+    APP_INITIALIZED = "App is already initialized"
+    USERNAME_REQUIRED = "Login parameter is reqiured"
+    PASSWORD_REQUIRED = "Password parameter is required"
+    WRONG_LOGIN_DATA = "Login or password is incorrect"
+    SUCCESSFUL_LOGIN = "Logged in properly"
+    ALREADY_LOGGED_IN = "You are already logged in"
+    NOT_LOGGED_IN = "You are not logged in"
+    LOGGED_OUT = "You have been logout"
