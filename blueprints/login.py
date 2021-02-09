@@ -29,7 +29,6 @@ def _login_():
     if not Hash.verify_password(user.password, password):
         return {"error": Messages.WRONG_LOGIN_DATA}, 401
 
-    session.permanent = True
     session['logged_in'] = True
     session['user_id'] = user.id
 
