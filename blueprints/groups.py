@@ -1,7 +1,8 @@
 from flask import Blueprint, request
 from lib.auth import Auth
 from lib.messages import Messages
-from database.models import Groups, db
+from database.models import Groups, Users, db
+import json
 
 groups = Blueprint('gropus', __name__)
 
@@ -85,3 +86,28 @@ def _delete_(group_id):
     db.session.commit()
 
     return {"ok": Messages.GROUP_DELETED}
+
+
+@groups.route('/<group_id>/participants', methods=['get'])
+@Auth.root_required
+def _participants_(group_id):
+    try:
+        group_id = int(group_id)
+    except ValueError:
+        return {"error": Messages.INT_VALUE_ERROR}, 400
+
+    all_users = Users.query.all()
+    to_return = []
+
+    for user in all_users:
+        groups = []
+        if user.groups:
+            groups = json.loads(user.groups)
+        if group_id in groups:
+            to_return.append({
+                "id": user.id,
+                "username": user.username,
+                "admin": user.admin
+            })
+
+    return {"ok": to_return}
