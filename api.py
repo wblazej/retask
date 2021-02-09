@@ -18,11 +18,13 @@ from blueprints.login import login
 from blueprints.logout import logout
 from blueprints.users import users
 from blueprints.groups import groups
+from blueprints.tasks import tasks
 app.register_blueprint(init, url_prefix='/api/init')
 app.register_blueprint(login, url_prefix='/api/login')
 app.register_blueprint(logout, url_prefix='/api/logout')
 app.register_blueprint(users, url_prefix='/api/users')
 app.register_blueprint(groups, url_prefix='/api/groups')
+app.register_blueprint(tasks, url_prefix='/api/tasks')
 
 if __name__ == "__main__":
     app.debug = True
