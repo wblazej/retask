@@ -12,6 +12,33 @@ from random import choices
 users = Blueprint('users', __name__)
 
 
+@users.route('', methods=['get'])
+@Auth.root_required
+def _users_():
+    all_users = Users.query.all()
+    all_groups = Groups.query.all()
+    to_return = []
+
+    for au in all_users:
+        groups = []
+        if au.groups:
+            for g in json.loads(au.groups):
+                groups.append({
+                    "id": all_groups[g-1].id,
+                    "name": all_groups[g-1].name,
+                    "color": all_groups[g-1].color
+                })
+
+        to_return.append({
+            "id": au.id,
+            "username": au.username,
+            "groups": groups,
+            "admin": au.admin
+        })
+
+    return {"ok": to_return}
+
+
 @users.route('change-password', methods=['post'])
 @Auth.logged_user
 def _change_password_():

@@ -5,6 +5,23 @@ from database.models import Groups, db
 
 groups = Blueprint('gropus', __name__)
 
+
+@groups.route('', methods=['get'])
+@Auth.root_required
+def _groups_():
+    all_groups = Groups.query.all()
+    to_return = []
+
+    for ag in all_groups:
+        to_return.append({
+            "id": ag.id,
+            "name": ag.name,
+            "color": ag.color
+        })
+
+    return {"ok": to_return}
+
+
 @groups.route('/create', methods=['post'])
 @Auth.root_required
 def _create_():
