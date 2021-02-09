@@ -6,8 +6,11 @@ from lib.hash import Hash
 from lib.auth import Auth
 from database.models import Groups
 import json
+import string
+from random import choices
 
 users = Blueprint('users', __name__)
+
 
 @users.route('change-password', methods=['post'])
 @Auth.logged_user
@@ -37,6 +40,7 @@ def _change_password_():
     db.session.commit()
 
     return {"ok": Messages.PASSWORD_CHANGED}
+
 
 @users.route('create', methods=['post'])
 @Auth.root_required
@@ -70,12 +74,7 @@ def _create_():
         if not groups:
             groups = []
 
-        if not admin:
-            admin = False
-
-        try:
-            admin = bool(admin)
-        except ValueError:
+        if not admin or type(admin) != bool:
             admin = False
 
         for ag in default_groups + groups:
@@ -92,3 +91,126 @@ def _create_():
     db.session.commit()
 
     return {"ok": Messages.ACCOUNTS_CREATED}
+
+
+@users.route('/<user_id>/change-username', methods=['post'])
+@Auth.root_required
+def _change_username_(user_id):
+    user = Users.query.filter_by(id=user_id).first()
+
+    if not user:
+        return {"error": Messages.USER_NOT_FOUND}, 404
+
+    post = request.get_json()
+    new_username = post.get("username")
+
+    if not new_username:
+        return {"error": Messages.USERNAME_REQUIRED}, 400
+
+    user.username = new_username
+    db.session.commit()
+
+    return {"ok": Messages.USERNAME_CHANGED}
+
+
+@users.route("/<user_id>/set-admin/<boolean_value>", methods=['get'])
+@Auth.root_required
+def _set_admin_(user_id, boolean_value):
+    user = Users.query.filter_by(id=user_id).first()
+
+    if not user:
+        return {"error": Messages.USER_NOT_FOUND}, 404
+
+    if boolean_value.lower() == "true":
+        user.admin = True
+    elif boolean_value.lower() == "false":
+        user.admin = False
+    else:
+        return {"error": Messages.BOOL_VALUE_ERROR}, 400
+
+    db.session.commit()
+
+    return {"ok": Messages.ADMIN_STATUS_CHANGED}
+
+
+@users.route("<user_id>/reset-password", methods=['get'])
+@Auth.root_required
+def _reset_password_(user_id):
+    user = Users.query.filter_by(id=user_id).first()
+
+    if not user:
+        return {"error": Messages.USER_NOT_FOUND}, 404
+
+    characters = string.ascii_lowercase + string.digits
+    reseted_password = ''.join(choices(characters, k=6))
+    hash_pwd = Hash.hash_password(reseted_password)
+
+    user.password = hash_pwd
+    db.session.commit()
+
+    return {"ok": f"New password: {reseted_password}"}
+
+
+@users.route("/<user_id>/group/add/<group_id>", methods=['get'])
+@Auth.root_required
+def _add_to_group_(user_id, group_id):
+    user = Users.query.filter_by(id=user_id).first()
+
+    try:
+        group_id = int(group_id)
+    except ValueError:
+        return {"error": Messages.INT_VALUE_ERROR}
+
+    if not user:
+        return {"error": Messages.USER_NOT_FOUND}, 404
+
+    if not Groups.query.filter_by(id=group_id).first():
+        return {"error": Messages.GROUP_NOT_EXISTS}, 404
+
+    groups = json.loads(user.groups)
+
+    if not group_id in groups:
+        groups.append(group_id)
+        user.groups = json.dumps(groups)
+
+        db.session.commit()
+
+    return {"ok": Messages.GROUP_ASSIGMENTED}
+
+
+@users.route("/<user_id>/group/remove/<group_id>", methods=['get'])
+@Auth.root_required
+def _remove_from_group_(user_id, group_id):
+    user = Users.query.filter_by(id=user_id).first()
+
+    try:
+        group_id = int(group_id)
+    except ValueError:
+        return {"error": Messages.INT_VALUE_ERROR}
+
+    if not user:
+        return {"error": Messages.USER_NOT_FOUND}, 404
+
+    if not Groups.query.filter_by(id=group_id).first():
+        return {"error": Messages.GROUP_NOT_EXISTS}, 404
+
+    groups = json.loads(user.groups)
+
+    if group_id in groups:
+        groups.remove(group_id)
+        user.groups = json.dumps(groups)
+
+        db.session.commit()
+
+    return {"ok": Messages.USER_REMOVED_FROM_GROUP}
+
+@users.route("/<user_id>/delete", methods=['get'])
+@Auth.root_required
+def _delete_(user_id):
+    if not Users.query.filter_by(id=user_id).first():
+        return {"error": Messages.USER_NOT_FOUND}, 404
+
+    Users.query.filter_by(id=user_id).delete()
+    db.session.commit()
+
+    return {"ok": "User has been deleted"}
