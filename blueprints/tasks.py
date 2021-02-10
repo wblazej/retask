@@ -308,3 +308,79 @@ def _my_(_type):
                 to_return.append(task_report)
         
     return {"ok": to_return}
+
+
+@tasks.route('/<group_id>', methods=['get'])
+@Auth.admin_required
+def _tasks_(group_id):
+    group = Groups.query.filter_by(id=group_id).first()
+
+    if not group:
+        return {"error": Messages.GROUP_NOT_EXISTS}, 404
+
+    all_tasks = Tasks.query.all()
+    to_return = []
+
+    for i in range(len(all_tasks) - 1, -1, -1):
+        if all_tasks[i].group_id == group.id:
+            to_return.append({
+                "id": i + 1,
+                "name": all_tasks[i].name,
+                "deadline": all_tasks[i].deadline_timestamp,
+                "expired": False
+            })
+
+            if all_tasks[i].deadline_timestamp <= datetime.now().timestamp():
+                to_return[-1]['expired'] = True
+
+    return {"ok": to_return}
+
+
+@tasks.route('/task-solutions/<task_id>', methods=['get'])
+@Auth.admin_required
+def _tasks_solutions_(task_id):
+    task = Tasks.query.filter_by(id=task_id).first()
+
+    if not task:
+        return {"error": Messages.TASK_NOT_FOUND}, 404
+
+    all_users = Users.query.all()
+    to_return = {
+        "name": task.name,
+        "solutions": []
+    }
+
+    if task.solutions:
+        solutions = json.loads(task.solutions)
+        banned_solutions = {}
+        if task.banned_solutions:
+            banned_solutions = json.loads(task.banned_solutions)
+
+        points = calculete_task_points(solutions, task.tasks_count)
+        to_return['points'] = points
+            
+        for key in solutions.keys():
+            s = {
+                "username": all_users[int(key) - 1].username,
+                "points": 0,
+                "solutions": []
+            }
+
+            for i in range(task.tasks_count):
+                ss = {
+                    "checked": False,
+                    "banned": False
+                }
+                if i + 1 in solutions[key]:
+                    ss['checked'] = True
+                    s['points'] += points[i]
+
+                s['solutions'].append(ss)
+
+                if banned_solutions.get(key):
+                    if i + 1 in banned_solutions[key]:
+                        ss['banned'] = True
+
+            to_return['solutions'].append(s)
+
+    return {"ok": to_return}
