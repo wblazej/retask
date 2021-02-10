@@ -9,7 +9,7 @@ groups = Blueprint('gropus', __name__)
 
 
 @groups.route('', methods=['get'])
-@Auth.root_required
+@Auth.admin_required
 def _groups_():
     all_groups = Groups.query.all()
     to_return = []
@@ -103,7 +103,7 @@ def _delete_(group_id):
 
 
 @groups.route('/<group_id>/participants', methods=['get'])
-@Auth.root_required
+@Auth.admin_required
 def _participants_(group_id):
     try:
         group_id = int(group_id)

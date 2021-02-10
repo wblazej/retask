@@ -5,6 +5,7 @@ from database.models import db, Tasks, Groups, Users
 import json
 from datetime import datetime
 from lib.calculate_task_points import calculete_task_points
+import htmlentities
 
 tasks = Blueprint('tasks', __name__)
 
@@ -51,6 +52,20 @@ def _create_():
     db.session.commit()
 
     return {"ok": Messages.TASK_CREADTED}
+
+
+@tasks.route('/<task_id>/delete', methods=['get'])
+@Auth.admin_required
+def _delete_(task_id):
+    task = Tasks.query.filter_by(id=task_id).first()
+
+    if not task:
+        return {"error": Messages.TASK_NOT_FOUND.replace("<id>", task_id)}, 404
+
+    Tasks.query.filter_by(id=task_id).delete()
+    db.session.commit()
+
+    return {"ok": Messages.TASK_DELETED}
 
 
 @tasks.route('/<task_id>/update', methods=['post'])

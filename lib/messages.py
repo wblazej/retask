@@ -55,3 +55,4 @@ class Messages:
     GROUP_EXISTS = "Group with this name already exists"
     SOLUTION_UNBANNED = "Solution unbanned"
     FORBIDDEN_SOLUTION = "This solution is banned for you"
+    TASK_DELETED = "Task has been deleted"
