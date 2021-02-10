@@ -53,3 +53,5 @@ class Messages:
     SOLUTION_BANNED = "Solution banned"
     INVALID_HEX = "Invalid hex number"
     GROUP_EXISTS = "Group with this name already exists"
+    SOLUTION_UNBANNED = "Solution unbanned"
+    FORBIDDEN_SOLUTION = "This solution is banned for you"

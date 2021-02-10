@@ -125,6 +125,12 @@ def _check_(task_id, action, number):
 
     user_id = str(session['user_id'])
 
+    if task.banned_solutions:
+        banned_solutions = json.loads(task.banned_solutions)
+        if banned_solutions.get(user_id):
+            if number in banned_solutions[user_id]:
+                return {"error": Messages.FORBIDDEN_SOLUTION}, 403
+
     if action == "check":
         if not solutions.get(user_id):
             solutions[user_id] = []
@@ -147,7 +153,7 @@ def _check_(task_id, action, number):
 @tasks.route('/solution/<action>', methods=['post'])
 @Auth.admin_required
 def _solution_remove_(action):
-    if action != "remove" and action != "ban":
+    if action != "remove" and action != "ban" and action != "unban":
         abort(404)
 
     post = request.get_json()
@@ -178,15 +184,16 @@ def _solution_remove_(action):
 
     user_id = str(user_id)
 
-    if task.solutions:
-        solutions = json.loads(task.solutions)
-        if solutions.get(user_id):
-            if solution in solutions[user_id]:
-                solutions[user_id].remove(solution)
-                if len(solutions[user_id]) == 0:
-                    solutions.pop(user_id, None)
+    if action != "unban":
+        if task.solutions:
+            solutions = json.loads(task.solutions)
+            if solutions.get(user_id):
+                if solution in solutions[user_id]:
+                    solutions[user_id].remove(solution)
+                    if len(solutions[user_id]) == 0:
+                        solutions.pop(user_id, None)
 
-                task.solutions = json.dumps(solutions)
+                    task.solutions = json.dumps(solutions)
 
     if action == "ban":
         banned_solutions = {}
@@ -201,10 +208,22 @@ def _solution_remove_(action):
 
         task.banned_solutions = json.dumps(banned_solutions)
 
+    if action == "unban":
+        if task.banned_solutions:
+            banned_solutions = json.loads(task.banned_solutions)
+            if banned_solutions.get(user_id):
+                if solution in banned_solutions[user_id]:
+                    banned_solutions[user_id].remove(solution)
+                    if len(banned_solutions[user_id]) == 0:
+                        banned_solutions.pop(user_id, None)
+                    
+                    task.banned_solutions = json.dumps(banned_solutions)
+
     db.session.commit()
 
     if action == "remove": return {"ok": Messages.SOLUTION_REMOVED}
-    else: return {"ok": Messages.SOLUTION_BANNED}
+    elif action == "ban": return {"ok": Messages.SOLUTION_BANNED}
+    else: return {"ok": Messages.SOLUTION_UNBANNED}
 
 
 # @tasks.route('/my', methods=['get'])
