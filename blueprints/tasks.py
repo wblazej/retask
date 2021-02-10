@@ -4,8 +4,10 @@ from lib.messages import Messages
 from database.models import db, Tasks, Groups, Users
 import json
 from datetime import datetime
+from lib.calculate_task_points import calculete_task_points
 
 tasks = Blueprint('tasks', __name__)
+
 
 @tasks.route('/create', methods=['post'])
 @Auth.admin_required
@@ -150,6 +152,7 @@ def _check_(task_id, action, number):
     if action == "check": return {"ok": Messages.SOLUTION_CHECKED}
     else: return {"ok": Messages.SOLUTION_UNCHECKED}
 
+
 @tasks.route('/solution/<action>', methods=['post'])
 @Auth.admin_required
 def _solution_remove_(action):
@@ -226,23 +229,67 @@ def _solution_remove_(action):
     else: return {"ok": Messages.SOLUTION_UNBANNED}
 
 
-# @tasks.route('/my', methods=['get'])
-# @Auth.logged_user
-# def _my_():
-#     all_tasks = Tasks.query.all()
-#     user = Users.query.filter_by(id=session['user_id']).first()
+@tasks.route('/my/<_type>', methods=['get'])
+@Auth.logged_user
+def _my_(_type):
+    if _type != "current" and _type != "finished":
+        abort(404)
 
-#     groups = []
-#     if user.groups:
-#         groups = json.loads(user.groups)
+    all_tasks = Tasks.query.all()
+    user = Users.query.filter_by(id=session['user_id']).first()
 
-#     to_return = []
+    user_groups = []
+    if user.groups:
+        user_groups = json.loads(user.groups)
 
-#     for at in all_tasks:
-#         if at.group_id in groups:
-#             to_return.append({
-#                 "id": at.id,
-#                 "name": at.name,
-#                 "tasks_count": at.tasks_count,
-#                 "deadline_timestamp": at.deadline_timestamp
-#             })
+    to_return = []
+
+    for task in all_tasks:
+        if task.group_id in user_groups:
+            correct_one = False
+            if _type == "current" and task.deadline_timestamp > datetime.now().timestamp():
+                correct_one = True
+            if _type == "finished" and task.deadline_timestamp <= datetime.now().timestamp():
+                correct_one = True
+
+            if correct_one:
+                task_report = {
+                    "id": task.id,
+                    "name": task.name,
+                    "deadline": task.deadline_timestamp,
+                    "points": 0,
+                    "solutions": []
+                }
+
+                solutions = {}
+                if task.solutions:
+                    solutions = json.loads(task.solutions)
+
+                banned_solutions = {}
+                if task.banned_solutions:
+                    banned_solutions = json.loads(task.banned_solutions)
+
+                user_id = str(session['user_id'])
+                points = calculete_task_points(solutions, task.tasks_count)
+
+                for i in range(task.tasks_count):
+                    s = {
+                        "checked": False,
+                        "banned": False,
+                        "points": points[i]
+                    }
+
+                    if solutions.get(user_id):
+                        if i + 1 in solutions[user_id]:
+                            s['checked'] = True
+                            task_report['points'] += points[i]
+
+                    if banned_solutions.get(user_id):
+                        if i + 1 in banned_solutions[user_id]:
+                            s['banned'] = True
+
+                    task_report['solutions'].append(s)
+                
+                to_return.append(task_report)
+        
+    return {"ok": to_return}

@@ -1,7 +1,4 @@
 TODO:
- - USER:
-    - moje taski
-    - moje rozwiązania
  - ADMIN;
     - taski
     - rozwiązania
