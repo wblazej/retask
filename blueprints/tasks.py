@@ -1,4 +1,4 @@
-from flask import Blueprint, request, session
+from flask import Blueprint, request, session, abort
 from lib.auth import Auth
 from lib.messages import Messages
 from database.models import db, Tasks, Groups, Users
@@ -85,9 +85,12 @@ def _update_(task_id):
     return {"ok": Messages.TASK_UPDATED}
 
 
-@tasks.route('/<task_id>/check/<number>', methods=['get'])
+@tasks.route('/<task_id>/<action>/<number>', methods=['get'])
 @Auth.logged_user
-def _check_(task_id, number):
+def _check_(task_id, action, number):
+    if action != "check" and action != "uncheck":
+        abort(404)
+
     task = Tasks.query.filter_by(id=task_id).first()
 
     if not task:
@@ -119,16 +122,86 @@ def _check_(task_id, number):
 
     user_id = str(session['user_id'])
 
-    if not solutions.get(user_id):
-        solutions[user_id] = []
+    if action == "check":
+        if not solutions.get(user_id):
+            solutions[user_id] = []
 
-    if not number in solutions[user_id]:
-        solutions[user_id].append(number)
+        if not number in solutions[user_id]:
+            solutions[user_id].append(number)
+    elif action == "uncheck":
+        if solutions.get(user_id):
+            if number in solutions[user_id]:
+                solutions[user_id].remove(number)
+            if len(solutions[user_id]) == 0:
+                solutions.pop(user_id, None)
 
     task.solutions = json.dumps(solutions)
     db.session.commit()
 
-    return {"ok": Messages.SOLUTION_CHECKED}
+    if action == "check": return {"ok": Messages.SOLUTION_CHECKED}
+    else: return {"ok": Messages.SOLUTION_UNCHECKED}
+
+@tasks.route('/solution/<action>', methods=['post'])
+@Auth.admin_required
+def _solution_remove_(action):
+    if action != "remove" and action != "ban":
+        abort(404)
+
+    post = request.get_json()
+
+    task_id = post.get('task-id')
+    user_id = post.get('user-id')
+    solution = post.get('solution')
+
+    if not task_id:
+        return {"error": Messages.TASK_ID_REQUIRED}, 400
+
+    if not user_id:
+        return {"error": Messages.USER_ID_REQUIRED}, 400
+
+    if not solution:
+        return {"error": Messages.SOLUTION_NUMBER_REQUIRED}, 400
+
+    task = Tasks.query.filter_by(id=task_id).first()
+
+    if not task:
+        return {"error": Messages.TASK_NOT_FOUND.replace("<id>", str(task_id))}, 404
+
+    if not Users.query.filter_by(id=user_id).first():
+        return {"error": Messages.USER_NOT_FOUND}, 404
+
+    if solution > task.tasks_count:
+        return {"error": Messages.SOLUTION_NOT_FOUND}, 404
+
+    user_id = str(user_id)
+
+    if task.solutions:
+        solutions = json.loads(task.solutions)
+        if solutions.get(user_id):
+            if solution in solutions[user_id]:
+                solutions[user_id].remove(solution)
+                if len(solutions[user_id]) == 0:
+                    solutions.pop(user_id, None)
+
+                task.solutions = json.dumps(solutions)
+
+    if action == "ban":
+        banned_solutions = {}
+        if task.banned_solutions:
+            banned_solutions = json.loads(task.banned_solutions)
+
+        if not banned_solutions.get(user_id):
+            banned_solutions[user_id] = []
+
+        if not solution in banned_solutions[user_id]:
+            banned_solutions[user_id].append(solution)
+
+        task.banned_solutions = json.dumps(banned_solutions)
+
+    db.session.commit()
+
+    if action == "remove": return {"ok": Messages.SOLUTION_REMOVED}
+    else: return {"ok": Messages.SOLUTION_BANNED}
 
 
 # @tasks.route('/my', methods=['get'])
