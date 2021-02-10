@@ -51,3 +51,5 @@ class Messages:
     USER_ID_REQUIRED = "User id parameter is requried"
     SOLUTION_NUMBER_REQUIRED = "Solution number parameter is requried"
     SOLUTION_BANNED = "Solution banned"
+    INVALID_HEX = "Invalid hex number"
+    GROUP_EXISTS = "Group with this name already exists"

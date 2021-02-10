@@ -40,6 +40,8 @@ def _create_():
     if tasks_count > 26:
         return {"error": Messages.MAX_TASKS_COUNT}, 400
 
+    name = htmlentities.encode(name)
+
     new_task = Tasks(name=name, group_id=group_id, tasks_count=tasks_count, 
                      deadline_timestamp=deadline_timestamp)
 
@@ -64,6 +66,7 @@ def _update_(task_id):
     deadline_timestamp = post.get("deadline")
 
     if name:
+        name = htmlentities.encode(name)
         task.name = name
 
     if tasks_count:

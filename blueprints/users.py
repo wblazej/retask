@@ -8,6 +8,7 @@ from database.models import Groups
 import json
 import string
 from random import choices
+import htmlentities
 
 users = Blueprint('users', __name__)
 
@@ -112,6 +113,7 @@ def _create_():
             return {"error": Messages.USERNAME_EXISTS.replace("<username>", username)}, 400
 
         groups_json = json.dumps(default_groups + groups)
+        username = htmlentities.encode(username)
         new_user = Users(username=username, password=hash_pwd, groups=groups_json, admin=admin)
         db.session.add(new_user)
 
@@ -134,6 +136,7 @@ def _change_username_(user_id):
     if not new_username:
         return {"error": Messages.USERNAME_REQUIRED}, 400
 
+    new_username = htmlentities.encode(new_username)
     user.username = new_username
     db.session.commit()
 

@@ -3,6 +3,7 @@ from lib.auth import Auth
 from lib.messages import Messages
 from database.models import Groups, Users, db
 import json
+import htmlentities
 
 groups = Blueprint('gropus', __name__)
 
@@ -37,6 +38,13 @@ def _create_():
     if not color:
         return {"error": Messages.COLOR_REQIURED}, 400
 
+    if Groups.query.filter_by(name=name).first():
+        return {"error": Messages.GROUP_EXISTS}, 400
+
+    name = htmlentities.encode(name)
+    if not correct_hex_number(color):
+        return {"error": Messages.INVALID_HEX}, 400
+
     new_group = Groups(name=name, color=color)
     db.session.add(new_group)
     db.session.commit()
@@ -62,9 +70,15 @@ def _update_(group_id):
     color = post.get("color")
 
     if name:
+        if Groups.query.filter_by(name=name).first():
+            return {"error": Messages.GROUP_EXISTS}, 400
+            
+        name = htmlentities.encode(name)
         group.name = name
 
     if color:
+        if not correct_hex_number(color):
+            return {"error": Messages.INVALID_HEX}, 400
         group.color = color
 
     db.session.commit()
@@ -111,3 +125,12 @@ def _participants_(group_id):
             })
 
     return {"ok": to_return}
+
+
+def correct_hex_number(hex_number_string):
+    allowed_chars = "0123456789ABCDEF"
+    for hns in hex_number_string:
+        if not str(hns).upper() in allowed_chars:
+            return False
+
+    return True
