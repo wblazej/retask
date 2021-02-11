@@ -1,0 +1,39 @@
+.box {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    background-color: #080a0e;
+    padding: 20px;
+    animation: info_box_animation .3s;
+}
+
+.box::before {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 40px;
+    top: 0;
+    bottom: 0;
+    left: -40px;
+}
+
+.success::before {
+    content: '✔';
+    background-color: rgb(28, 179, 28);
+}
+
+.failure::before {
+    content: '✘';
+    background-color: rgb(214, 45, 45);
+}
+
+@keyframes info_box_animation {
+    from {
+        right: -250px;
+    }
+    to {
+        right: 20px;
+    }
+}

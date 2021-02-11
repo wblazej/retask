@@ -1,5 +1,5 @@
 class Messages:
-    DEFAULT_ROOT_LOGIN = "App initialized, root account login data: Login: root | Password: root"
+    DEFAULT_ROOT_LOGIN = "App initialized. Login and password to root account is 'root'. Please reload the page to log in"
     APP_INITIALIZED = "App is already initialized"
     USERNAME_REQUIRED = "Login parameter is reqiured"
     PASSWORD_REQUIRED = "Password parameter is required"

@@ -11,3 +11,36 @@ a {
     color: #fff;
     text-decoration: none;
 }
+
+h1 {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.8em;
+    margin-top:50px;
+    position:relative;
+}
+h1::after {
+    content: '';
+    position:absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 2px;
+    width: 150px;
+    background: linear-gradient(90deg, 
+                             rgb(236, 52, 52) 0%, 
+                             rgb(218, 142, 56) 20%, 
+                             rgb(204, 230, 58) 40%, 
+                             rgb(68, 231, 76) 60%, 
+                             rgb(67, 165, 231) 100%);
+}
+
+p {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: justify;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: 1.1em;
+}
