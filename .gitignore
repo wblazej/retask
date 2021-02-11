@@ -3,10 +3,11 @@ __pycache__/
 *.py[cod]
 
 # secret
-/secret
+/api/secret
 
 # database
-/database/database.db
+/api/database/database.db
+/api/database/backup-database.db
 
 # dependencies
 /node_modules

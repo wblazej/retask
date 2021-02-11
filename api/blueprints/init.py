@@ -21,6 +21,6 @@ def _init_():
 @init.route('/check', methods=['get'])
 def _init_check_():
     if Users.query.filter_by(username="root").first() == None:
-        return "False"
+        return {"ok": False}
     else:
-        return "True"
+        return {"ok": True}
