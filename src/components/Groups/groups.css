@@ -1,0 +1,23 @@
+.new-group-name {
+    width: auto;
+    margin-top: 0px;
+    text-align: left;
+}
+
+.new-group-name .input-box {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.colors {
+}
+
+.colors .color {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+}
