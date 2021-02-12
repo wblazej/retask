@@ -1,0 +1,16 @@
+.dashboard {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 50px;
+}
+
+.dashboard .menu-box {
+    margin-left: 50px;
+}
+
+.content {
+    min-height: 500px;
+    width: 50%;
+    max-width: 1000px;
+    margin-left: 50px;
+}

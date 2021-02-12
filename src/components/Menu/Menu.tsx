@@ -5,43 +5,52 @@ import SolutionsIcon from './../../img/solutions.png'
 import PasswordIcon from './../../img/password.png'
 import GroupsIcon from './../../img/groups.png'
 import UsersIcon from './../../img/users.png'
-import UserInfo from '../UserInfo/UserInfo';
 
-const Menu = () => {
+type Props = {
+    type: string
+}
+
+const Menu: React.FunctionComponent<Props> = ({ type }) => {
     return (
-        <>
-            <div className="menu">
-                <div className="button">
+        <div className="menu">
+            <nav>
+                <a href='/dashboard/my-tasks' className="button">
                     <img src={TasksIcon} alt="TasksIcon"/>
                     <span>My tasks</span>
-                </div>
+                </a>
 
-                <div className="button">
+                <a href='/dashboard/my-solutions' className="button">
                     <img src={SolutionsIcon} alt="SolutionsIcon"/>
                     <span>My solutions</span>
-                </div>
+                </a>
 
-                <div className="button">
+                <a href='/dashboard/change-password' className="button">
                     <img src={PasswordIcon} alt="PasswordIcon"/>
                     <span>Change password</span>
-                </div>
+                </a>
 
-                <div className="button">
-                    <img src={TasksIcon} alt="TasksIcon"/>
-                    <span>Student's tasks</span>
-                </div>
+                { (type === 'admin' || type === 'root') &&
+                    <a href='/dashboard/tasks' className="button">
+                        <img src={TasksIcon} alt="TasksIcon"/>
+                        <span>Student's tasks</span>
+                    </a>
+                }
 
-                <div className="button">
-                    <img src={GroupsIcon} alt="GroupsIcon"/>
-                    <span>Groups</span>
-                </div>
+                { type === 'root' &&
+                    <>
+                        <a href='/dashboard/groups' className="button">
+                            <img src={GroupsIcon} alt="GroupsIcon"/>
+                            <span>Groups</span>
+                        </a>
 
-                <div className="button">
-                    <img src={UsersIcon} alt="UsersIcon"/>
-                    <span>Users</span>
-                </div>
-            </div>
-        </>
+                        <a href='/dashboard/users' className="button">
+                            <img src={UsersIcon} alt="UsersIcon"/>
+                            <span>Users</span>
+                        </a>
+                    </>
+                }
+            </nav>
+        </div>
     )
 }
 

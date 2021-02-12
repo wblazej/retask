@@ -6,7 +6,7 @@ info = Blueprint('info', __name__)
 @info.route('', methods=['get'])
 def _info_():
     if not session.get("logged_in"):
-        return "NOT_LOGGED_IN"
+        return {"error": "NOT_LOGGED_IN"} 
 
     user = Users.query.filter_by(id=session['user_id']).first()
 

@@ -1,49 +1,11 @@
-form {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    margin-top: 100px;
+.dashboard-button-box {
     width: fit-content;
-}
-
-input[type=text],
-input[type=password] {
-    outline: none;
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid #fff;
-    padding: 10px;
-    color: #fff;
-    font-size: 1.2em;
-    width: 250px;
-    font-family: 'Lato', sans-serif;
-}
-
-.input-box {
-    position: relative;
-    width: fit-content;
-    margin-top: 50px;
-}
-
-label {
     position: absolute;
-    left: 10px;
-    top: 9px;
-    font-size: 1.2em;
-    transition: font-size .3s, top .3s;
-    pointer-events: none;
+    left: 35px;
+    top: 50px;
 }
 
-input[type=text]:focus ~ label,
-input[type=text]:valid ~ label,
-input[type=password]:focus ~ label,
-input[type=password]:valid ~ label {
-    font-size: .8em;
-    top: -15px;
-}
-
-input[type=submit] {
-    width: 150px;
+.dashboard-button {
     padding: 15px;
     border-radius: 10px;
     background-color: transparent;
@@ -59,7 +21,7 @@ input[type=submit] {
     font-family: 'Lato', sans-serif;
 }
 
-input[type=submit]:hover {
+.dashboard-button:hover {
     background-color: #fff;
     color: #000;
 }

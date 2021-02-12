@@ -68,6 +68,10 @@ const Login = () => {
 
                 <input type="submit" value="Login"/>
             </form>
+
+            <div className="dashboard-button-box">
+                <a href="/dashboard" className="dashboard-button">go to dashboard</a>
+            </div>
         </>
     )
 }

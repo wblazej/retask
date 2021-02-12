@@ -5,7 +5,7 @@ class Messages:
     PASSWORD_REQUIRED = "Password parameter is required"
     WRONG_LOGIN_DATA = "Login or password is incorrect"
     SUCCESSFUL_LOGIN = "Logged in properly"
-    ALREADY_LOGGED_IN = "You are already logged in"
+    ALREADY_LOGGED_IN = "You are already logged in, please go to dashboard"
     NOT_LOGGED_IN = "You are not logged in"
     LOGGED_OUT = "You have been logout"
     NEW_PASSWORD_REQUIRED = "New password parameter is required"
