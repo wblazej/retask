@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import './studentsTasks.css'
 import InfoBox from './../InfoBox/InfoBox'
+import {
+    BrowserRouter as Router,
+    Route
+} from "react-router-dom";
+import Task from './Task'
 
 const StudentsTasks = () => {
     const [optionsGroups, setOptionsGroups] = useState(Array<object>())
@@ -82,44 +87,61 @@ const StudentsTasks = () => {
 
     return (
         <>
-            { infoBox.type !== '' && <InfoBox type={infoBox.type} message={infoBox.message} />}
+            <Router>
+                <Route exact path='/dashboard/tasks'>
+                    { infoBox.type !== '' && <InfoBox type={infoBox.type} message={infoBox.message} />}
 
-            <h1>student's tasks</h1>
-            <h2>Create new task</h2>
+                    <h1>student's tasks</h1>
+                    <h2>Create new task</h2>
 
-            <form className="create-task-form" onSubmit={createTask}>
-                <div className="input-box">
-                    <input type="text" value={name} onChange={nameHandler} required />
-                    <label>Name</label>
-                </div>
+                    <form className="create-task-form" onSubmit={createTask}>
+                        <div className="input-box">
+                            <input type="text" value={name} onChange={nameHandler} required />
+                            <label>Name</label>
+                        </div>
 
-                <div className="input-box">
-                    <select onChange={groupHandler} required>
-                        <option value="null">Choose group</option>
+                        <div className="input-box">
+                            <select onChange={groupHandler} required>
+                                <option value="null">Choose group</option>
+                                { optionsGroups.map((element: any) => {
+                                    return (
+                                        <option key={element.id} value={element.id}>{element.name}</option>
+                                    )
+                                })}
+                            </select>
+                        </div>
+
+                        <br/>
+
+                        <div className="input-box">
+                            <span>Deadline</span>
+                            <input type="datetime-local" onChange={deadlineHandler} required />
+                        </div>
+
+                        <div className="input-box">
+                            <span>Tasks count</span>
+                            <input defaultValue="1" onChange={tasksCountHandler} type="number" min="1" max="26" required />
+                        </div>
+
+                        <br/>
+
+                        <input type="submit" value="Create task"/>
+                    </form>
+
+                    <h2>Student's solutions</h2>
+                    <div className="groups">
                         { optionsGroups.map((element: any) => {
                             return (
-                                <option key={element.id} value={element.id}>{element.name}</option>
+                                <a key={element.id} href={`/dashboard/tasks/${element.id}`} className="group-button">
+                                    <div style={{backgroundColor: `#${element.color}`}}></div>
+                                    {element.name}
+                                </a>
                             )
                         })}
-                    </select>
-                </div>
-
-                <br/>
-
-                <div className="input-box">
-                    <span>Deadline</span>
-                    <input type="datetime-local" onChange={deadlineHandler} required />
-                </div>
-
-                <div className="input-box">
-                    <span>Tasks count</span>
-                    <input defaultValue="1" onChange={tasksCountHandler} type="number" min="1" max="26" required />
-                </div>
-
-                <br/>
-
-                <input type="submit" value="Create task"/>
-            </form>
+                    </div>
+                </Route>
+                <Route exact path='/dashboard/tasks/:id' component={Task}></Route>
+            </Router>
         </>
     )
 }

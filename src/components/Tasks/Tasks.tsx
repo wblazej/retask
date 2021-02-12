@@ -54,7 +54,7 @@ const Tasks = () => {
                     return (
                         <div className="task" key={element.id}>
                             <div className="group">
-                                <div style={{backgroundColor: "#" + element.color}}></div><span>{element.group_name}</span>
+                                <div style={{backgroundColor: `#${element.group_color}`}}></div><span>{element.group_name}</span>
                             </div>
                             <div className="title">{element.name}</div>
                             <div className="solutions">

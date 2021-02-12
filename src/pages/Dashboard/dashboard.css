@@ -9,9 +9,8 @@
 }
 
 .content {
-    width: 80%;
+    width: 60%;
     min-height: 500px;
-    max-width: 1000px;
     margin-left: 50px;
     margin-bottom: 100px;
 }

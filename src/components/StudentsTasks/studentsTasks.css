@@ -2,6 +2,7 @@
     width: auto;
     margin-top: 0px;
     text-align: left;
+    margin-bottom: 80px;
 }
 
 .create-task-form .input-box {
@@ -12,4 +13,26 @@
 .input-box span {
     font-size: 1.2em;
     margin-right: 20px;
+}
+
+.groups .group-button {
+    background-color: #080a0e;
+    padding: 20px;
+    border-radius: 30px;
+    display: inline-block;
+    padding-left: 45px;
+    position: relative;
+    font-size: 1.1em;
+    margin-right: 10px;
+}
+
+.groups .group-button div {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 20px;
 }
