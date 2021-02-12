@@ -18,6 +18,7 @@ h1 {
     font-size: 1.8em;
     margin-top:50px;
     position:relative;
+    margin-bottom: 50px;
 }
 h1::after {
     content: '';
@@ -54,7 +55,9 @@ form {
 }
 
 input[type=text],
-input[type=password] {
+input[type=password],
+input[type=number],
+select {
     outline: none;
     background-color: transparent;
     border: none;
@@ -64,6 +67,11 @@ input[type=password] {
     font-size: 1.2em;
     width: 250px;
     font-family: 'Lato', sans-serif;
+}
+
+select {
+    background-color: #0d1117;
+    width: 270px;
 }
 
 .input-box {
@@ -110,4 +118,49 @@ input[type=submit] {
 input[type=submit]:hover {
     background-color: #fff;
     color: #000;
+}
+
+input[type=checkbox] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    outline: 0;
+    height: 32px;
+    width: 52px;
+    border-radius: 16px;
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    transition: all 0.2s ease;
+    background-color: rgb(54, 54, 54);
+}
+input[type=checkbox]::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: white;
+    transition: all 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
+}
+input[type=checkbox]:checked {
+    background-color: rgb(47, 120, 255);
+}
+input[type=checkbox]:checked::after {
+    transform: translatex(20px);
+}
+
+input[type=checkbox] ~ label {
+    position: static;
+    margin-left: 10px;
+}
+
+.checkbox-container .inner {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
 }

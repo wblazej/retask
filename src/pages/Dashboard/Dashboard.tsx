@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom'
 import './dashboard.css'
 import ChangePassword from './../../components/ChangePassword/ChangePassword'
 import Groups from './../../components/Groups/Groups'
+import Users from './../../components/Users/Users'
 
 import {
     BrowserRouter as Router,
@@ -47,6 +48,7 @@ const Dashboard = () => {
                     <Router>
                         <Route path='/dashboard/change-password' component={ChangePassword}></Route>
                         <Route path='/dashboard/groups' component={Groups}></Route>
+                        <Route path='/dashboard/users' component={Users}></Route>
                     </Router>
                 </div>
             </div>
