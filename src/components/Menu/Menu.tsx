@@ -14,7 +14,7 @@ const Menu: React.FunctionComponent<Props> = ({ type }) => {
     return (
         <div className="menu">
             <nav>
-                <a href='/dashboard/my-tasks' className="button">
+                <a href='/dashboard' className="button">
                     <img src={TasksIcon} alt="TasksIcon"/>
                     <span>My tasks</span>
                 </a>

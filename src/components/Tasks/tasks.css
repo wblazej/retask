@@ -1,0 +1,73 @@
+.task {
+    width: 250px;
+    background-color: #080a0e;
+    border-radius: 20px;
+    padding: 20px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 10px;
+}
+
+.group {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.group::after,
+.solutions::after {
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: 290px;
+    background-color: rgb(66, 66, 66);
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -20px;
+}
+
+.group div {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: red;
+    margin-right: 8px;
+}
+
+.title {
+    font-size: .9em;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.solutions {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.solutions .row {
+    display: flex;
+    align-items: center;
+    width: 220px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
+
+.solutions .row .name {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.solutions .row .points {
+    font-size: 1.1em;
+    margin-left: 20px;
+}
+
+.info {
+    color: rgb(122, 122, 122);
+    font-size: .9em;
+}

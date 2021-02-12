@@ -251,6 +251,7 @@ def _my_(_type):
         abort(404)
 
     all_tasks = Tasks.query.all()
+    all_groups = Groups.query.all()
     user = Users.query.filter_by(id=session['user_id']).first()
 
     user_groups = []
@@ -270,6 +271,8 @@ def _my_(_type):
             if correct_one:
                 task_report = {
                     "id": task.id,
+                    "group_name": all_groups[task.group_id - 1].name,
+                    "group_color": all_groups[task.group_id - 1].color,
                     "name": task.name,
                     "deadline": task.deadline_timestamp,
                     "points": 0,
@@ -289,6 +292,7 @@ def _my_(_type):
 
                 for i in range(task.tasks_count):
                     s = {
+                        "id": i + 1,
                         "checked": False,
                         "banned": False,
                         "points": points[i]
