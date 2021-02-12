@@ -6,6 +6,7 @@ import './dashboard.css'
 import ChangePassword from './../../components/ChangePassword/ChangePassword'
 import Groups from './../../components/Groups/Groups'
 import Users from './../../components/Users/Users'
+import StudentsTasks from './../../components/StudentsTasks/StudentsTasks'
 
 import {
     BrowserRouter as Router,
@@ -49,6 +50,7 @@ const Dashboard = () => {
                         <Route path='/dashboard/change-password' component={ChangePassword}></Route>
                         <Route path='/dashboard/groups' component={Groups}></Route>
                         <Route path='/dashboard/users' component={Users}></Route>
+                        <Route path='/dashboard/tasks' component={StudentsTasks}></Route>
                     </Router>
                 </div>
             </div>

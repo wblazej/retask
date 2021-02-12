@@ -17,3 +17,27 @@
 input[type=number] {
     width: 50px;
 }
+
+.add-users-button {
+    width: 150px;
+    display: block;
+    text-align: center;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: transparent;
+    margin-top: 50px;
+    outline: none;
+    border: 2px solid #fff;
+    cursor: pointer;
+    font-size: 1em;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    transition: background-color .2s, color .2s;
+    font-family: 'Lato', sans-serif;
+}
+
+.add-users-button:hover {
+    background-color: #fff;
+    color: #000;
+}

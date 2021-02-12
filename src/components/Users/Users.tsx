@@ -13,6 +13,7 @@ const Users = () => {
                 <Route exact path='/dashboard/users/create' component={CreateUsers}></Route>
                 <Route exact path='/dashboard/users'>
                     <h1>users</h1>
+                    <a href="/dashboard/users/create" className="add-users-button">Add users</a>
                 </Route>
             </Router>
         </>
