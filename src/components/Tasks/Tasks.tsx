@@ -49,6 +49,8 @@ const Tasks = () => {
             { infoBox.type !== '' && <InfoBox type={infoBox.type} message={infoBox.message} />}
 
             <h1>tasks</h1>
+            { tasks.length === 0 && <p className='no-tasks'>no tasks for you<br/>#win</p> }
+
             <div className="tasks">
                 { tasks.map((element: any) => {
                     return (
