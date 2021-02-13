@@ -7,7 +7,7 @@ import htmlentities
 
 groups = Blueprint('gropus', __name__)
 
-
+# getting all groups
 @groups.route('', methods=['get'])
 @Auth.admin_required
 def _groups_():
@@ -24,6 +24,7 @@ def _groups_():
     return {"ok": to_return}
 
 
+# creating a new group
 @groups.route('/create', methods=['post'])
 @Auth.root_required
 def _create_():
@@ -51,6 +52,8 @@ def _create_():
 
     return {"ok": Messages.GROUP_CREATED}
 
+
+# update group settings
 @groups.route('/<group_id>/update', methods=['post'])
 @Auth.root_required
 def _update_(group_id):
@@ -85,6 +88,8 @@ def _update_(group_id):
 
     return {"ok": Messages.GROUP_UPDATED}
 
+
+# deleting group
 @groups.route('/<group_id>/delete', methods=['get'])
 @Auth.root_required
 def _delete_(group_id):
@@ -102,6 +107,7 @@ def _delete_(group_id):
     return {"ok": Messages.GROUP_DELETED}
 
 
+# getting all participants of group
 @groups.route('/<group_id>/participants', methods=['get'])
 @Auth.admin_required
 def _participants_(group_id):
@@ -127,6 +133,7 @@ def _participants_(group_id):
     return {"ok": to_return}
 
 
+# function that checks if hex number is correct
 def correct_hex_number(hex_number_string):
     allowed_chars = "0123456789ABCDEF"
     for hns in hex_number_string:

@@ -10,6 +10,7 @@ import htmlentities
 tasks = Blueprint('tasks', __name__)
 
 
+# creating a new task
 @tasks.route('/create', methods=['post'])
 @Auth.admin_required
 def _create_():
@@ -54,6 +55,7 @@ def _create_():
     return {"ok": Messages.TASK_CREADTED}
 
 
+# deleting task
 @tasks.route('/<task_id>/delete', methods=['get'])
 @Auth.admin_required
 def _delete_(task_id):
@@ -68,6 +70,7 @@ def _delete_(task_id):
     return {"ok": Messages.TASK_DELETED}
 
 
+# updating task's settings
 @tasks.route('/<task_id>/update', methods=['post'])
 @Auth.admin_required
 def _update_(task_id):
@@ -105,6 +108,7 @@ def _update_(task_id):
     return {"ok": Messages.TASK_UPDATED}
 
 
+# checking or unchecking tasks by user
 @tasks.route('/<task_id>/<action>/<number>', methods=['get'])
 @Auth.logged_user
 def _check_(task_id, action, number):
@@ -168,6 +172,7 @@ def _check_(task_id, action, number):
     else: return {"ok": Messages.SOLUTION_UNCHECKED}
 
 
+# removing, banning or unbannin user's solution by admin
 @tasks.route('/solution/<action>', methods=['post'])
 @Auth.admin_required
 def _solution_remove_(action):
@@ -244,6 +249,7 @@ def _solution_remove_(action):
     else: return {"ok": Messages.SOLUTION_UNBANNED}
 
 
+# getting current or finished tasks by user
 @tasks.route('/my/<_type>', methods=['get'])
 @Auth.logged_user
 def _my_(_type):
@@ -314,6 +320,7 @@ def _my_(_type):
     return {"ok": to_return}
 
 
+# getting all tasks of group by admin
 @tasks.route('/<group_id>', methods=['get'])
 @Auth.admin_required
 def _tasks_(group_id):
@@ -340,6 +347,7 @@ def _tasks_(group_id):
     return {"ok": to_return}
 
 
+# getting task's solutions by admin
 @tasks.route('/task-solutions/<task_id>', methods=['get'])
 @Auth.admin_required
 def _tasks_solutions_(task_id):

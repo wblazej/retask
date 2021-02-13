@@ -5,6 +5,8 @@ from lib.hash import Hash
 
 login = Blueprint('login', __name__)
 
+
+# login endpoint
 @login.route('', methods=['post'])
 def _login_():
     if session.get("logged_in"):

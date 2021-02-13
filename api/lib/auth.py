@@ -4,6 +4,8 @@ from lib.messages import Messages
 from database.models import Users
 
 class Auth:
+
+    # authorization - USER THAT IS LOGGED IN
     @staticmethod
     def logged_user(f):
         @wraps(f)
@@ -14,6 +16,8 @@ class Auth:
             return f(*args, **kwargs)
         return decorated_function
 
+
+    # authorization - ROOT ACCOUNT
     @staticmethod
     def root_required(f):
         @wraps(f)
@@ -30,6 +34,8 @@ class Auth:
             return f(*args, **kwargs)
         return decorated_function
 
+
+    # authorization - ADMIN PERMISSIONS
     @staticmethod
     def admin_required(f):
         @wraps(f)

@@ -13,6 +13,7 @@ import htmlentities
 users = Blueprint('users', __name__)
 
 
+# getting all users by root
 @users.route('', methods=['get'])
 @Auth.root_required
 def _users_():
@@ -40,6 +41,7 @@ def _users_():
     return {"ok": to_return}
 
 
+# change account password by user
 @users.route('change-password', methods=['post'])
 @Auth.logged_user
 def _change_password_():
@@ -70,6 +72,7 @@ def _change_password_():
     return {"ok": Messages.PASSWORD_CHANGED}
 
 
+# create user/users by root
 @users.route('create', methods=['post'])
 @Auth.root_required
 def _create_():
@@ -122,6 +125,7 @@ def _create_():
     return {"ok": Messages.ACCOUNTS_CREATED}
 
 
+# change account's username by root
 @users.route('/<user_id>/change-username', methods=['post'])
 @Auth.root_required
 def _change_username_(user_id):
@@ -143,6 +147,7 @@ def _change_username_(user_id):
     return {"ok": Messages.USERNAME_CHANGED}
 
 
+# change admin status of account by root
 @users.route("/<user_id>/set-admin/<boolean_value>", methods=['get'])
 @Auth.root_required
 def _set_admin_(user_id, boolean_value):
@@ -163,6 +168,7 @@ def _set_admin_(user_id, boolean_value):
     return {"ok": Messages.ADMIN_STATUS_CHANGED}
 
 
+# reset account's password by root
 @users.route("<user_id>/reset-password", methods=['get'])
 @Auth.root_required
 def _reset_password_(user_id):
@@ -181,6 +187,7 @@ def _reset_password_(user_id):
     return {"ok": f"New password: {reseted_password}"}
 
 
+# add user to group by root
 @users.route("/<user_id>/group/add/<group_id>", methods=['get'])
 @Auth.root_required
 def _add_to_group_(user_id, group_id):
@@ -208,6 +215,7 @@ def _add_to_group_(user_id, group_id):
     return {"ok": Messages.GROUP_ASSIGMENTED}
 
 
+# remove user from group by root
 @users.route("/<user_id>/group/remove/<group_id>", methods=['get'])
 @Auth.root_required
 def _remove_from_group_(user_id, group_id):
@@ -234,6 +242,8 @@ def _remove_from_group_(user_id, group_id):
 
     return {"ok": Messages.USER_REMOVED_FROM_GROUP}
 
+
+# deleing user by root
 @users.route("/<user_id>/delete", methods=['get'])
 @Auth.root_required
 def _delete_(user_id):

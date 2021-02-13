@@ -33,7 +33,7 @@ const Solutions = () => {
                 showInfoBox('failure', data.error)
             }
         })
-    }, [])
+    }, [params])
 
     const [infoBox, setInfoBox] = useState({type: '', message: ''})
     const showInfoBox = (type: string, message: string) => {

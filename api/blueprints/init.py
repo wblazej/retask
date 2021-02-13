@@ -6,6 +6,8 @@ from lib.hash import Hash
 
 init = Blueprint('init', __name__)
 
+
+# init app endpoint
 @init.route('', methods=['get'])
 def _init_():
     if Users.query.filter_by(username="root").first() == None:
@@ -18,6 +20,8 @@ def _init_():
     else:
         return {"error": Messages.APP_INITIALIZED}, 403
 
+
+# checking if app is initialized 
 @init.route('/check', methods=['get'])
 def _init_check_():
     if Users.query.filter_by(username="root").first() == None:

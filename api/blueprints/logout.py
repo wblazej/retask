@@ -5,6 +5,8 @@ from lib.auth import Auth
 
 logout = Blueprint('logout', __name__)
 
+
+# logout endpoint
 @logout.route('', methods=['get'])
 @Auth.logged_user
 def _logout_():

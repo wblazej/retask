@@ -3,6 +3,9 @@ from database.models import Users
 
 info = Blueprint('info', __name__)
 
+
+# this endpoint is created for front-end menu rendering (account type)
+# it's also for checking if user is logged in
 @info.route('', methods=['get'])
 def _info_():
     if not session.get("logged_in"):
