@@ -3,7 +3,9 @@ import InfoBox from './../InfoBox/InfoBox'
 
 const CreateUsers = () => {
     const [count, setCount] = useState(1)
-    const countChangeHandler = (Event: React.FormEvent<HTMLInputElement>) => { setCount(parseInt(Event.currentTarget.value)) }
+    const countChangeHandler = (Event: React.FormEvent<HTMLInputElement>) => { 
+        setCount(parseInt(Event.currentTarget.value)) 
+    }
 
     const [optionsGroups, setOptionsGroups] = useState(Array<object>())
 
@@ -65,6 +67,7 @@ const CreateUsers = () => {
 
     const [defaultPassword, setDefaultPassword] = useState("")
     const [defaultGroup, setDefaultGroup] = useState("")
+    
     const defaultPasswordHandler = (Event: React.FormEvent<HTMLInputElement>) => {
         setDefaultPassword(Event.currentTarget.value)
     }

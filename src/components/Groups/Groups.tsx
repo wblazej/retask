@@ -3,14 +3,27 @@ import './groups.css'
 import InfoBox from './../InfoBox/InfoBox'
 
 const Groups = () => {
-    // Create new group
+    const Colors = [ "#D41515", "#E09B34", "#F0E73A", "#68C724", "#2ED1C4", "#2E90D1", "#1225B3", "#E349EB", "#FFFFFF"]
+
     const [name, setName] = useState("")
     const [color, setColor] = useState("")
-    const nameChangeHandler = (Event: React.FormEvent<HTMLInputElement>) => { setName(Event.currentTarget.value) }
-    const colorChangeHanlder = (Event: React.FormEvent<HTMLInputElement>) => { setColor(Event.currentTarget.value) }
-    const Colors = [ "#D41515", "#E09B34", "#F0E73A", "#68C724", "#2ED1C4", "#2E90D1", "#1225B3", "#E349EB", "#FFFFFF"]
-    const getStyles = (_color: string) => { return {backgroundColor: _color} }
-    const colorClickHandler = (_color: string) => { setColor(_color) }
+
+    const nameChangeHandler = (Event: React.FormEvent<HTMLInputElement>) => { 
+        setName(Event.currentTarget.value) 
+    }
+
+    const colorChangeHanlder = (Event: React.FormEvent<HTMLInputElement>) => { 
+        setColor(Event.currentTarget.value) 
+    }
+
+    const getStyles = (_color: string) => { 
+        return {backgroundColor: _color} 
+    }
+
+    const colorClickHandler = (_color: string) => { 
+        setColor(_color) 
+    }
+    
     const createGroup = (Event: React.FormEvent) => {
         Event.preventDefault()
 

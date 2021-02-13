@@ -3,14 +3,6 @@ import './changePassword.css'
 import InfoBox from './../../components/InfoBox/InfoBox'
 
 const ChangePassword = () => {
-    const [infoBox, setInfoBox] = useState({type: '', message: ''})
-    const showInfoBox = (type: string, message: string) => {
-        if (infoBox.type === '') {
-            setInfoBox({type: type, message: message})
-            setTimeout(() => setInfoBox({type: '', message: ''}), 4000)
-        }
-    }
-
     const [currentPassword, setCurrentPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
@@ -55,6 +47,14 @@ const ChangePassword = () => {
                 showInfoBox('failure', data.error)
             }
         })
+    }
+
+    const [infoBox, setInfoBox] = useState({type: '', message: ''})
+    const showInfoBox = (type: string, message: string) => {
+        if (infoBox.type === '') {
+            setInfoBox({type: type, message: message})
+            setTimeout(() => setInfoBox({type: '', message: ''}), 4000)
+        }
     }
 
     return (
