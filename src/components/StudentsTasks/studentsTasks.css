@@ -36,3 +36,54 @@
     transform: translateY(-50%);
     left: 20px;
 }
+
+table {
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table .header td {
+    font-weight: bold;
+}
+
+table td {
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    padding: 10px 40px;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+table td a {
+    transition: color .2s;
+}
+
+table td a:hover {
+    color:rgb(51, 127, 199);
+}
+
+table tr .sol {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table tr .checked {
+    background-color: rgb(30, 209, 60);
+}
+
+table tr .unchecked {
+    border: 1px solid #fff;
+    background-color: transparent;
+}
+
+.sol-points {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: .8em;
+    color: rgb(95, 95, 95);
+}

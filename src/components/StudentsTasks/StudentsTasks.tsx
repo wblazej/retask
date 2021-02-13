@@ -6,6 +6,7 @@ import {
     Route
 } from "react-router-dom";
 import Task from './Task'
+import Solutions from './Solutions'
 
 const StudentsTasks = () => {
     const [optionsGroups, setOptionsGroups] = useState(Array<object>())
@@ -36,7 +37,7 @@ const StudentsTasks = () => {
     }
 
     const deadlineHandler = (Event: React.FormEvent<HTMLInputElement>) => {
-        setDeadline(new Date(Event.currentTarget.value).getTime())
+        setDeadline(new Date(Event.currentTarget.value).getTime() / 1000)
     }
 
     const tasksCountHandler = (Event: React.FormEvent<HTMLInputElement>) => {
@@ -141,6 +142,7 @@ const StudentsTasks = () => {
                     </div>
                 </Route>
                 <Route exact path='/dashboard/tasks/:id' component={Task}></Route>
+                <Route exact path='/dashboard/tasks/solutions/:id' component={Solutions}></Route>
             </Router>
         </>
     )
