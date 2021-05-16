@@ -10,6 +10,8 @@ echo "your secret key" > secret/secret-key
 python api.py
 ```
 Secret key can be a random string and it allows to store user session data in cookies.
+
+
 Client:
 ```
 yarn install
