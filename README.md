@@ -5,8 +5,11 @@ This is a system for schooling that allowas teachers check how many of students 
 Server:
 ```
 cd api
+mkdir secret
+echo "your secret key" > secret/secret-key
 python api.py
 ```
+Secret key can be a random string and it allows to store user session data in cookies.
 Client:
 ```
 yarn install
