@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './tasks.css'
-import {reverseArr} from './../../ts/reverseArr'
 import {getDateFromTimestamp} from './../../ts/getDateFromTimestamp'
 import InfoBox from './../InfoBox/InfoBox'
 
@@ -15,7 +14,7 @@ const Tasks = () => {
         })
         .then(data => {
             if ('ok' in data) {
-                setTasks(reverseArr(data.ok))
+                setTasks(data.ok.reverse())
             }
         })
     }, [])
