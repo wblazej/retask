@@ -1,7 +1,8 @@
 export const getDateFromTimestamp = (timestamp: number) => {
-    let datetime = new Date(timestamp)
+    let datetime = new Date(timestamp * 1000)
+    
     let day = datetime.getDate()
-    let month = datetime.getMonth()
+    let month = datetime.getMonth() + 1
     let year = datetime.getFullYear()
     let hour = datetime.getHours()
     let minute = datetime.getMinutes()
