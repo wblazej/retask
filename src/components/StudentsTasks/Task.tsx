@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
 import InfoBox from './../InfoBox/InfoBox'
 import {getDateFromTimestamp} from './../../ts/getDateFromTimestamp'
+import { Link } from 'react-router-dom';
 
 const Task = () => {
     const params: any = useParams()
@@ -49,7 +50,7 @@ const Task = () => {
                         return (
                             <tr>
                                 <td>{element.id}</td>
-                                <td><a href={`/dashboard/tasks/solutions/${element.id}`}>{element.name}</a></td>
+                                <td><Link to={`/dashboard/tasks/solutions/${element.id}`}>{element.name}</Link></td>
                                 { element.expired === false && <td>Yes</td> }
                                 { element.expired === true && <td>No</td> }
                                 <td>{getDateFromTimestamp(element.deadline)}</td>

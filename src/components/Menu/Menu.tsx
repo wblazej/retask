@@ -5,6 +5,7 @@ import SolutionsIcon from './../../img/solutions.png'
 import PasswordIcon from './../../img/password.png'
 import GroupsIcon from './../../img/groups.png'
 import UsersIcon from './../../img/users.png'
+import { Link } from 'react-router-dom';
 
 type Props = {
     type: string
@@ -14,39 +15,39 @@ const Menu: React.FunctionComponent<Props> = ({ type }) => {
     return (
         <div className="menu">
             <nav>
-                <a href='/dashboard' className="button">
+                <Link to='/dashboard' className="button">
                     <img src={TasksIcon} alt="TasksIcon"/>
                     <span>My tasks</span>
-                </a>
+                </Link>
 
-                <a href='/dashboard/my-solutions' className="button">
+                <Link to='/dashboard/my-solutions' className="button">
                     <img src={SolutionsIcon} alt="SolutionsIcon"/>
                     <span>My solutions</span>
-                </a>
+                </Link>
 
-                <a href='/dashboard/change-password' className="button">
+                <Link to='/dashboard/change-password' className="button">
                     <img src={PasswordIcon} alt="PasswordIcon"/>
                     <span>Change password</span>
-                </a>
+                </Link>
 
                 { (type === 'admin' || type === 'root') &&
-                    <a href='/dashboard/tasks' className="button">
+                    <Link to='/dashboard/tasks' className="button">
                         <img src={TasksIcon} alt="TasksIcon"/>
                         <span>Student's tasks</span>
-                    </a>
+                    </Link>
                 }
 
                 { type === 'root' &&
                     <>
-                        <a href='/dashboard/groups' className="button">
+                        <Link to='/dashboard/groups' className="button">
                             <img src={GroupsIcon} alt="GroupsIcon"/>
                             <span>Groups</span>
-                        </a>
+                        </Link>
 
-                        <a href='/dashboard/users' className="button">
+                        <Link to='/dashboard/users' className="button">
                             <img src={UsersIcon} alt="UsersIcon"/>
                             <span>Users</span>
-                        </a>
+                        </Link>
                     </>
                 }
             </nav>

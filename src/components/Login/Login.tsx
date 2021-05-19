@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import InfoBox from '../InfoBox/InfoBox';
 import { useHistory } from 'react-router-dom';
 import './login.css'
+import { Link } from 'react-router-dom';
 
 const Login = () => {
     const history = useHistory()
@@ -70,7 +71,7 @@ const Login = () => {
             </form>
 
             <div className="dashboard-button-box">
-                <a href="/dashboard" className="dashboard-button">go to dashboard</a>
+                <Link to="/dashboard" className="dashboard-button">go to dashboard</Link>
             </div>
         </>
     )

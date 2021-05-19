@@ -8,11 +8,7 @@ import Groups from './../../components/Groups/Groups'
 import Users from './../../components/Users/Users'
 import StudentsTasks from './../../components/StudentsTasks/StudentsTasks'
 import Tasks from './../../components/Tasks/Tasks'
-
-import {
-    BrowserRouter as Router,
-    Route
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 const Dashboard = () => {
     const history = useHistory()
@@ -42,19 +38,21 @@ const Dashboard = () => {
         <>
             <UserInfo username={username} />
             <div className="dashboard">
-                <div className="menu-box">
-                    <Menu type={type}/>
-                </div>
+                <Router>
+                    <div className="menu-box">
+                        <Menu type={type}/>
+                    </div>
 
-                <div className="content">
-                    <Router>
-                        <Route path='/dashboard/change-password' component={ChangePassword}></Route>
-                        <Route path='/dashboard/groups' component={Groups}></Route>
-                        <Route path='/dashboard/users' component={Users}></Route>
-                        <Route path='/dashboard/tasks' component={StudentsTasks}></Route>
-                        <Route exact path='/dashboard' component={Tasks}></Route>
-                    </Router>
-                </div>
+                    <div className="content">
+                        <Switch>
+                            <Route path='/dashboard/change-password' component={ChangePassword}></Route>
+                            <Route path='/dashboard/groups' component={Groups}></Route>
+                            <Route path='/dashboard/users' component={Users}></Route>
+                            <Route path='/dashboard/tasks' component={StudentsTasks}></Route>
+                            <Route exact path='/dashboard' component={Tasks}></Route>
+                        </Switch>
+                    </div>
+                </Router>
             </div>
         </>
     )

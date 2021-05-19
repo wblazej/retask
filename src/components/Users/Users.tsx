@@ -1,9 +1,6 @@
 import React from 'react';
 import './users.css'
-import {
-    BrowserRouter as Router,
-    Route
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import CreateUsers from './CreateUsers'
 
 const Users = () => {
@@ -13,7 +10,7 @@ const Users = () => {
                 <Route exact path='/dashboard/users/create' component={CreateUsers}></Route>
                 <Route exact path='/dashboard/users'>
                     <h1>users</h1>
-                    <a href="/dashboard/users/create" className="add-users-button">Add users</a>
+                    <Link to="/dashboard/users/create" className="add-users-button">Add users</Link>
                 </Route>
             </Router>
         </>
