@@ -1,2 +1,3 @@
 Flask
 htmlentities
+flask_sqlalchemy
