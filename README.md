@@ -18,6 +18,7 @@ Server:
 cd api
 mkdir secret
 echo "your secret key" > secret/secret-key
+pip install -r requirements.txt
 python api.py
 ```
 Secret key can be a random string and it allows to store user session data in cookies.
@@ -26,7 +27,7 @@ Secret key can be a random string and it allows to store user session data in co
 Client:
 ```
 yarn install
-yarn start # or npm instead
+yarn start
 ```
 
 This small web app uses SQLite database, which creates by itself while the app is starting if the database does not exists yet.
